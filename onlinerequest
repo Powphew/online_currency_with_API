@@ -1,0 +1,29 @@
+import requests
+
+def get_online_currencies():
+    api_key = 'fca_live_hoLsuBp9C4Vr9uSmhr7JfXyJelREmwLberE5IBTv'
+
+    host = f'https://api.freecurrencyapi.com/v1/latest?apikey={api_key}&currencies=EUR%2CUSD%2CCAD'
+
+    response = requests.get(host)
+
+    if response.status_code == 200:
+        data = response.json().get("data")
+        return data
+    else:
+        print(f"Не удалось загрузить курсы валют. Статус код: {response.status_code}")
+        return None
+
+currencies_data = get_online_currencies()
+
+if currencies_data:
+    print(currencies_data)
+else:
+    print("Используются стандартные значения.")
+    currencies_data = {
+        "EUR": 1.0,
+        "USD": 1.0,
+        "CAD": 1.0
+    }
+
+print(currencies_data)
